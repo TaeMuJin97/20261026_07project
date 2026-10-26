@@ -40,8 +40,11 @@ for name, estimator in [("Dummy", DummyRegressor()), ("Linear", LinearRegression
     model = Pipeline([("pre", clone(pre)), ("model", estimator)])
     # TODO A07r: 회귀 모델을 학습하고 valid 예측을 구하세요.
     # 힌트: 정답 열은 elapsed_ms입니다.
-    pass
-    prediction = None
+    # pass
+    # prediction = None
+    model.fit(X_train, train["elapsed_ms"])
+    prediction = model.predict(X_valid)
+
     regression_rows.append({"model": name, "scale": "standard",
         "MAE_ms": mean_absolute_error(valid["elapsed_ms"], prediction),
         "RMSE_ms": root_mean_squared_error(valid["elapsed_ms"], prediction)})
@@ -54,8 +57,11 @@ for name, estimator in [("Dummy", DummyClassifier(strategy="most_frequent")),
     model = Pipeline([("pre", clone(pre)), ("model", estimator)])
     # TODO A07c: 분류 모델을 학습하고 valid 예측을 구하세요.
     # 힌트: 정답 열은 failed입니다.
-    pass
-    prediction = None
+    # pass
+    # prediction = None
+    model.fit(X_train, train["failed"])
+    prediction = model.predict(X_valid)
+    
     tn, fp, fn, tp = confusion_matrix(valid["failed"], prediction, labels=[0, 1]).ravel()
     classification_rows.append({"model": name, "scale": "standard",
         "F1": f1_score(valid["failed"], prediction, zero_division=0),
